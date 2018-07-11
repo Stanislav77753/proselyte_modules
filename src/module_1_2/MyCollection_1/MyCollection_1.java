@@ -43,12 +43,12 @@ public class MyCollection_1 implements  Iterable{
             size++;
         }
     }
-    private void createNewArray(int arrayCapasity){
-        int[] tempArray = new int[arrayCapasity];
+    private void createNewArray(int arrayCapacity){
+        int[] tempArray = new int[arrayCapacity];
         for(int i = 0; i < size; i++){
             tempArray[i] = array[i];
         }
-        capacity = arrayCapasity * 3 / 2;
+        capacity = arrayCapacity * 3 / 2;
         array = new int[capacity];
         for(int i = 0; i < size; i++){
             array[i] = tempArray[i];
@@ -152,9 +152,13 @@ public class MyCollection_1 implements  Iterable{
         }
         return max;
     }
-    public int findMinElement() throws NoSuchFieldException {
+    public int findMinElement() {
         if(size == 0){
-            throw new NoSuchFieldException();
+            try {
+                throw new NoSuchFieldException();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
         int min = array[0];
         for(int i = 1; i < size; i++){
@@ -165,9 +169,13 @@ public class MyCollection_1 implements  Iterable{
         return min;
     }
 
-    public int findAverage()throws NoSuchFieldException{
+    public int findAverage(){
         if(size == 0){
-            throw new NoSuchFieldException();
+            try {
+                throw new NoSuchFieldException();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
         int sum = 0;
         for(int i = 0; i < size; i++){
