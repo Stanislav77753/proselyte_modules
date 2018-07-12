@@ -21,19 +21,18 @@ public class MyCollection_1 implements  Iterable{
     }
 
     public MyCollection_1(int initCapacity){
-        this.initCapacity = initCapacity;
         capacity = initCapacity;
         array = new int[capacity];
         size = 0;
     }
 
     public void add(int element){
+        if(size == capacity){
+            createNewArray(capacity);
+        }
         if(size == 0){
             array[size] = element;
             size++;
-        }
-        else if(size == capacity){
-            createNewArray(capacity);
         }
         else{
             for(int i = 0; i < size;i++){
@@ -45,22 +44,21 @@ public class MyCollection_1 implements  Iterable{
     }
     private void createNewArray(int arrayCapacity){
         int[] tempArray = new int[arrayCapacity];
-        for(int i = 0; i < size; i++){
+        System.arraycopy(array, 0, tempArray, 0, size);
+        /*for(int i = 0; i < size; i++){
             tempArray[i] = array[i];
-        }
+        }*/
         capacity = arrayCapacity * 3 / 2;
         array = new int[capacity];
-        for(int i = 0; i < size; i++){
+        System.arraycopy(tempArray, 0, array, 0, size);
+        /*for(int i = 0; i < size; i++){
             array[i] = tempArray[i];
-        }
+        }*/
     }
 
     public boolean add(int element, int index){
-        if(index >= capacity){
-            createNewArray(index);
-        }
-        if(size == capacity){
-            createNewArray(capacity);
+        if(index >= capacity | size == capacity){
+            createNewArray(index > size ? index : capacity);
         }
         int[] tArray = new int[capacity];
         for(int i = 0; i < index;i++){
@@ -86,7 +84,7 @@ public class MyCollection_1 implements  Iterable{
         int temp = array[size - 1];
         int[] tempArray = new int[capacity];
         for(int i = 0; i < size - 1; i++){
-            tempArray[i] = array[i] - temp;
+            tempArray[i] = array[i] - Math.abs(temp);
         }
         array = tempArray;
         size--;
@@ -103,7 +101,7 @@ public class MyCollection_1 implements  Iterable{
             tempArray[i] = array[i] - temp;
         }
         for(int i = index + 1; i < size; i++){
-            tempArray[i - 1] = array[i] - temp;
+            tempArray[i - 1] = array[i] - Math.abs(temp);
         }
         array = tempArray;
         size--;
@@ -211,6 +209,7 @@ public class MyCollection_1 implements  Iterable{
             public Object next() {
                 return array[currentIndex++];
             }
+
         };
         return iterator;
     }
